@@ -80,6 +80,6 @@ int Delete(int value, struct list_node_s** head_pp){
 
 
 int main(){
-	printf("Hello from the Main\n");
+	printf("Welcome to the Linked List Implementation Serial Program\n");
 	return 0;
 }
