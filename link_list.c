@@ -14,7 +14,7 @@ int Member(int value, struct list_node_s* head_p){
 	while (current_node != NULL && current_node->data < value)
 		current_node = current_node->next;
 
-	if (current_node == NULL || current_node->value > value){
+	if (current_node == NULL || current_node->data > value){
 		return 0;
 	} else {
 		return 1;
@@ -26,17 +26,17 @@ int Insert(int value, struct list_node_s** head_pp){
 	struct list_node_s *pre_node = NULL;
 	struct list_node_s *temp_node = NULL;
 
-	while (current_node != NULL && current_node->value < value){
+	while (current_node != NULL && current_node->data < value){
 		pre_node = current_node;
 		current_node = current_node->next;
 	}
-	if (current_node == NULL || current_node->value > value){
-	 	temp_node = (struct *)malloc(sizeof(struct list_node_s));
+	if (current_node == NULL || current_node->data > value){
+	 	temp_node = (struct list_node_s*)malloc(sizeof(struct list_node_s));
 	 	if (!temp_node){ 							/* Check memory is allocated properly */ 
 	 		printf("ERROR: out of memory\n");
 	 		return 1;
 	 	}
-	 	temp_node->value = value;
+	 	temp_node->data = value;
 	 	temp_node->next = current_node;
 
 	 	if (pre_node == NULL){  /* If this is the first node */
@@ -52,17 +52,17 @@ int Insert(int value, struct list_node_s** head_pp){
 
 }/* Insert */
 
-int Delete(int value, struct list_node_s** head_p){
+int Delete(int value, struct list_node_s** head_pp){
 	struct list_node_s *current_node = *head_pp;
 	struct list_node_s *pre_node = NULL;
 	// struct list_node_s *temp_node = NULL;
 
-	while (current_node != NULL && current_node->value < value){
+	while (current_node != NULL && current_node->data < value){
 		pre_node = current_node;
 		current_node = current_node->next;
 	}
 
-	if (current_node != NULL && current_node-> == value){
+	if (current_node != NULL && current_node->data == value){
 		if (pre_node == NULL){
 			*head_pp = current_node->next;
 			free(current_node);
@@ -77,3 +77,9 @@ int Delete(int value, struct list_node_s** head_p){
 		return 0;
 	}
 } /* Delete */
+
+
+int main(){
+	printf("Hello from the Main\n");
+	return 0;
+}
