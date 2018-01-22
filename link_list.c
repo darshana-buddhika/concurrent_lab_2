@@ -1,3 +1,5 @@
+
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -78,8 +80,49 @@ int Delete(int value, struct list_node_s** head_pp){
 	}
 } /* Delete */
 
+int Fill_Linked_List(int random,  struct list_node_s *head_p){
+	printf("%d hello form the Fill_Linked_List\n", random );
+	printf("memory location \n");
+	// printf(*head_p);
+
+	struct list_node_s ** head_pp;
+	head_pp = &head_p;
+
+	int c, n;
+  	printf("%d random numbers in [1,100]\n", random);
+ 
+  	for (c = 1; c <= random; c++) {
+    	n = rand() % 100 + 1;
+    	printf("%d\n", n);
+    	Insert(n, head_pp);
+  	}
+} /* Fill a linked list with given number of nodes */
 
 int main(){
 	printf("Welcome to the Linked List Implementation Serial Program\n");
+	
+	clock_t t;
+	t = clock();
+
+	struct list_node_s * p = (struct list_node_s *)malloc(sizeof(struct list_node_s)); /* initializing head node */
+
+	p->next = NULL;
+	p->data = 0;
+	
+	if (!p)
+	{
+		printf("ERROR\n");
+		
+	}
+
+	Fill_Linked_List(10, p);  /* Fill the linked list with 10 random numbers */
+	
+	/* Code */
+	t = clock() - t;
+	double time_taken = ((double)t)/CLOCKS_PER_SEC;
+
+	printf("fun() took %f seconds to execute \n", time_taken);
+
+ 	free(p);  /* Free the allocated space for linked list */
 	return 0;
 }
