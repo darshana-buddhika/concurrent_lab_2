@@ -24,7 +24,7 @@ int Member(int value, struct list_node_s* head_p){
 	struct list_node_s* current_node = head_p;
 
 	while (current_node != NULL && current_node->data < value){
-		printf("Current_node value: %d\n", current_node->data);
+		// printf("Current_node value: %d\n", current_node->data);
 		current_node = current_node->next;
 	}
 
@@ -57,7 +57,7 @@ int Insert(int value, struct list_node_s** head_pp){
 	 		return 1;
 	 	}
 
-	 	printf("Data inserted to the list: %d\n", value );
+	 	// printf("Data inserted to the list: %d\n", value );
 
 	 	temp_node->data = value;
 	 	temp_node->next = current_node;
@@ -78,6 +78,8 @@ int Insert(int value, struct list_node_s** head_pp){
 }/* Insert */
 
 int Delete(int value, struct list_node_s** head_pp){
+
+	printf("Hello from Delete funtion \n");
 	struct list_node_s *current_node = *head_pp;
 	struct list_node_s *pre_node = NULL;
 	// struct list_node_s *temp_node = NULL;
@@ -109,7 +111,7 @@ int Fill_Linked_List( struct list_node_s *head_p){
 	int c, r;
  
   	for (c = 1; c <= n; c++) {
-    	r = rand() % 65535;
+    	r = rand() % 65535 + 1;
     	if(!Insert(r, &head_p)){   /* If the number is already inserted reduce the counter  */
     		c--;
     	}
@@ -131,9 +133,6 @@ int main(int argc, char* argv[]){
 
 	printf("Welcome to the Linked List Implementation Serial Program\n");
 	
-	/* Start the clock to get execution time */
-	clock_t t;
-	t = clock();
 
 	struct list_node_s * head = NULL; /* initializing head node */
 	
@@ -145,10 +144,23 @@ int main(int argc, char* argv[]){
 
 	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */
 	
+	/* Start the clock to get execution time */
+	clock_t t;
+	t = clock();	
 
 	for (int i = 0; i < m; ++i)
 	{
 		int r;
+
+		r = rand() % 65535 + 1;
+		Member(r, head);
+
+		r = rand() % 65535 + 1;
+		Insert(r, &head);
+
+		r = rand() % 65535 + 1;
+		Delete(r, &head);
+
 	}
 	
 	/* Calculate the execution time */
