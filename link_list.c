@@ -11,19 +11,29 @@ struct list_node_s
 };
 
 int Member(int value, struct list_node_s* head_p){
+
+	printf("Hello from Member function\n");
 	struct list_node_s* current_node = head_p;
 
-	while (current_node != NULL && current_node->data < value)
+	while (current_node != NULL && current_node->data < value){
+		printf("Current_node value: %d\n", current_node->data);
 		current_node = current_node->next;
+	}
 
 	if (current_node == NULL || current_node->data > value){
 		return 0;
+
 	} else {
+		printf("Member found: %d\n", value );
 		return 1;
+		
 	}
 } /* Member */
 
 int Insert(int value, struct list_node_s** head_pp){
+
+	printf("Hello from Insert fuction\n");
+
 	struct list_node_s *current_node = *head_pp;
 	struct list_node_s *pre_node = NULL;
 	struct list_node_s *temp_node = NULL;
@@ -38,6 +48,9 @@ int Insert(int value, struct list_node_s** head_pp){
 	 		printf("ERROR: out of memory\n");
 	 		return 1;
 	 	}
+
+	 	printf("Data inserted to the list: %d\n", value );
+
 	 	temp_node->data = value;
 	 	temp_node->next = current_node;
 
@@ -48,7 +61,9 @@ int Insert(int value, struct list_node_s** head_pp){
 	 		return 1;	
 	 	}
 
+
 	} else {
+		printf("Value already exsists in the list: %d\n", value );
 		return 0; /* Value already in the list */
 	}
 
@@ -82,8 +97,6 @@ int Delete(int value, struct list_node_s** head_pp){
 
 int Fill_Linked_List(int random,  struct list_node_s *head_p){
 	printf("%d hello form the Fill_Linked_List\n", random );
-	printf("memory location \n");
-	// printf(*head_p);
 
 	struct list_node_s ** head_pp;
 	head_pp = &head_p;
@@ -92,7 +105,7 @@ int Fill_Linked_List(int random,  struct list_node_s *head_p){
   	printf("%d random numbers in [1,100]\n", random);
  
   	for (c = 1; c <= random; c++) {
-    	n = rand() % 100 + 1;
+    	n = rand() % random + 1;
     	printf("%d\n", n);
     	Insert(n, head_pp);
   	}
@@ -111,13 +124,16 @@ int main(){
 	
 	if (!p)
 	{
-		printf("ERROR\n");
+		printf("ERROR: Memory cannot be allocated\n");
 		
 	}
 
 	Fill_Linked_List(10, p);  /* Fill the linked list with 10 random numbers */
 	
 	/* Code */
+
+	Member(4, p);
+	
 	t = clock() - t;
 	double time_taken = ((double)t)/CLOCKS_PER_SEC;
 
