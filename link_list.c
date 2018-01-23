@@ -110,8 +110,10 @@ int Fill_Linked_List( struct list_node_s *head_p){
  
   	for (c = 1; c <= n; c++) {
     	r = rand() % 65535;
-    	// printf("%d\n", c);
-    	Insert(r, &head_p);
+    	if(!Insert(r, &head_p)){   /* If the number is already inserted reduce the counter  */
+    		c--;
+    	}
+
   	}
 } /* Fill a linked list with given number of nodes */
 
@@ -143,6 +145,11 @@ int main(int argc, char* argv[]){
 
 	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */
 	
+
+	for (int i = 0; i < m; ++i)
+	{
+		int r;
+	}
 	
 	/* Calculate the execution time */
 	t = clock() - t;
