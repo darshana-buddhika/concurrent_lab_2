@@ -4,6 +4,14 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+
+int n;  /*Inital population of linked list*/
+int m;	/*Random operation done on the list*/
+
+// int mInsert;
+// int mDelete;
+// int mMember;
+
 struct list_node_s 
 {
 	int data;
@@ -95,50 +103,53 @@ int Delete(int value, struct list_node_s** head_pp){
 	}
 } /* Delete */
 
-int Fill_Linked_List(int random,  struct list_node_s *head_p){
-	printf("%d hello form the Fill_Linked_List\n", random );
+int Fill_Linked_List( struct list_node_s *head_p){
+	printf("%d hello form the Fill_Linked_List\n", n );
 
-	struct list_node_s ** head_pp;
-	head_pp = &head_p;
-
-	int c, n;
-  	printf("%d random numbers in [1,100]\n", random);
+	int c, r;
  
-  	for (c = 1; c <= random; c++) {
-    	n = rand() % random + 1;
-    	printf("%d\n", n);
-    	Insert(n, head_pp);
+  	for (c = 1; c <= n; c++) {
+    	r = rand() % 65535;
+    	// printf("%d\n", c);
+    	Insert(r, &head_p);
   	}
 } /* Fill a linked list with given number of nodes */
 
-int main(){
+int main(int argc, char* argv[]){
+
+	/* Take command line arguments n and m */
+	if ( argc != 3 ){  
+		printf("Required argumaents are not supplied\n");
+		exit(1);
+
+	} else {
+		n = (int) strtol(argv[1], (char **)NULL, 10);
+		m = (int) strtol(argv[2], (char **)NULL, 10);
+	}
+
 	printf("Welcome to the Linked List Implementation Serial Program\n");
 	
+	/* Start the clock to get execution time */
 	clock_t t;
 	t = clock();
 
-	struct list_node_s * p = (struct list_node_s *)malloc(sizeof(struct list_node_s)); /* initializing head node */
-
-	p->next = NULL;
-	p->data = 0;
+	struct list_node_s * head = NULL; /* initializing head node */
 	
-	if (!p)
+	if (!head)
 	{
 		printf("ERROR: Memory cannot be allocated\n");
 		
 	}
 
-	Fill_Linked_List(10, p);  /* Fill the linked list with 10 random numbers */
+	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */
 	
-	/* Code */
-
-	Member(4, p);
 	
+	/* Calculate the execution time */
 	t = clock() - t;
 	double time_taken = ((double)t)/CLOCKS_PER_SEC;
 
 	printf("fun() took %f seconds to execute \n", time_taken);
 
- 	free(p);  /* Free the allocated space for linked list */
+ 	free(head);  /* Free the allocated space for linked list */
 	return 0;
 }
