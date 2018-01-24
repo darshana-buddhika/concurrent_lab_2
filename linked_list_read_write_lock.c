@@ -36,7 +36,7 @@ struct list_node_s
 
 int Member(int value, struct list_node_s* head_p){
 
-	printf("Hello from Member function\n");
+	// printf("Hello from Member function\n");
 	struct list_node_s* current_node = head_p;
 
 	while (current_node != NULL && current_node->data < value){
@@ -48,7 +48,7 @@ int Member(int value, struct list_node_s* head_p){
 		return 0;
 
 	} else {
-		printf("Member found: %d\n", value );
+		// printf("Member found: %d\n", value );
 		return 1;
 		
 	}
@@ -56,7 +56,7 @@ int Member(int value, struct list_node_s* head_p){
 
 int Insert(int value, struct list_node_s** head_pp){
 
-	printf("Hello from Insert fuction\n");
+	// printf("Hello from Insert fuction\n");
 
 	struct list_node_s *current_node = *head_pp;
 	struct list_node_s *pre_node = NULL;
@@ -87,7 +87,7 @@ int Insert(int value, struct list_node_s** head_pp){
 
 
 	} else {
-		printf("Value already exsists in the list: %d\n", value );
+		// printf("Value already exsists in the list: %d\n", value );
 		return 0; /* Value already in the list */
 	}
 
@@ -95,7 +95,7 @@ int Insert(int value, struct list_node_s** head_pp){
 
 int Delete(int value, struct list_node_s** head_pp){
 
-	printf("Hello from Delete funtion \n");
+	// printf("Hello from Delete funtion \n");
 	struct list_node_s *current_node = *head_pp;
 	struct list_node_s *pre_node = NULL;
 	// struct list_node_s *temp_node = NULL;
