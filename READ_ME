@@ -1,0 +1,46 @@
+To compile this programe:
+	For Serial program:
+
+		gcc -o <compiled file name> <file name> 
+
+		Example:
+			gcc -o output_file link_list.c
+
+	For parallel program (Mutex):
+
+		gcc -o <compiled file name> <file name> -lpthread
+
+		Example:
+			gcc linked_list_mutex lined_list_mutex.c -lpthread
+
+	For parallel program (Read Write lock):
+
+		gcc -o <compiled file name> <file name> -lpthread
+
+		Example:
+			gcc lined_list_RW linked_list_read_write_lock.c -lpthread
+
+
+
+To execute the complied file:
+
+	For Serial program:
+
+		./<complied file name> <n> <m> <member probability> <insert probability> <delete probability>
+
+		Example:
+			./link_list 1000 10000 0.99 0.005 0.005 
+
+	For Parallel program(Mutex):
+
+		./<complied file name> <n> <m> <member probability> <insert probability> <delete probability> <Number of threads>
+
+		Example:
+			./Linked_list_mutex 1000 10000 0.99 0.005 0.005 8
+
+	For Parallel program(Read Write Lock):
+
+		./<complied file name> <n> <m> <member probability> <insert probability> <delete probability> <Number of threads>
+
+		Example:
+			./Linked_list_RW 1000 10000 0.99 0.005 0.005 8
