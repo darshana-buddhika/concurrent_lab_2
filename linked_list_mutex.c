@@ -23,7 +23,7 @@ const int MAX_THREAD_COUNT = 1024;  /* Maximum number of threads supported by th
 int thread_count;   /* Take from command line argument */
 pthread_mutex_t mutex;
 
-struct list_node_s * head = NULL; /* initializing head node */
+// struct list_node_s * head = NULL; /* initializing head node */
 
 struct list_node_s 
 {
@@ -253,6 +253,8 @@ int main(int argc, char* argv[]){
 	// 	printf("ERROR: Memory cannot be allocated\n");
 		
 	// }
+	struct list_node_s * head = malloc(sizeof(struct list_node_s)); /* initializing head node */
+	
 	pthread_t* thread_handles;
 
 	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */

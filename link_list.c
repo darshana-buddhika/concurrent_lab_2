@@ -26,7 +26,7 @@ struct list_node_s
 
 int Member(int value, struct list_node_s* head_p){
 
-	printf("Hello from Member function\n");
+	// printf("Hello from Member function\n");
 	struct list_node_s* current_node = head_p;
 
 	while (current_node != NULL && current_node->data < value){
@@ -38,7 +38,7 @@ int Member(int value, struct list_node_s* head_p){
 		return 0;
 
 	} else {
-		printf("Member found: %d\n", value );
+		// printf("Member found: %d\n", value );
 		return 1;
 		
 	}
@@ -46,7 +46,7 @@ int Member(int value, struct list_node_s* head_p){
 
 int Insert(int value, struct list_node_s** head_pp){
 
-	printf("Hello from Insert fuction\n");
+	// printf("Hello from Insert fuction\n");
 
 	struct list_node_s *current_node = *head_pp;
 	struct list_node_s *pre_node = NULL;
@@ -77,7 +77,7 @@ int Insert(int value, struct list_node_s** head_pp){
 
 
 	} else {
-		printf("Value already exsists in the list: %d\n", value );
+		// printf("Value already exsists in the list: %d\n", value );
 		return 0; /* Value already in the list */
 	}
 
@@ -85,7 +85,7 @@ int Insert(int value, struct list_node_s** head_pp){
 
 int Delete(int value, struct list_node_s** head_pp){
 
-	printf("Hello from Delete funtion \n");
+	// printf("Hello from Delete funtion \n");
 	struct list_node_s *current_node = *head_pp;
 	struct list_node_s *pre_node = NULL;
 	// struct list_node_s *temp_node = NULL;
@@ -127,11 +127,13 @@ void shuffle(int *array, size_t n){
 
 int Fill_Linked_List( struct list_node_s *head_p){
 	printf("%d hello form the Fill_Linked_List\n", n );
+	// printf("%d pointer", head_p);
 
 	int c, r;
  
   	for (c = 1; c <= n; c++) {
     	r = rand() % 65535 + 1;
+    	// printf("initial popilation\n");
     	if(!Insert(r, &head_p)){   /* If the number is already inserted reduce the counter  */
     		c--;
     	}
@@ -172,16 +174,29 @@ int Fill_Linked_List( struct list_node_s *head_p){
 
 	shuffle(operation, m);  /* Shuffle the array */
 
-	for (int i = 0; i < m; ++i)
-	{
+	// for (int i = 0; i < m; ++i)
+	// {
 		
-		printf(" list value :%d\n", operation[i]);
-	}
+	// 	printf(" list value :%d\n", operation[i]);
+	// }
 
 	
 
 	
 } /* Fill a linked list with given number of nodes */
+
+	// int go(struct list_node_s* head_p){
+
+	// // printf("Hello from Member function\n");
+	// struct list_node_s* current_node = head_p;
+
+	// 	while (current_node != NULL){
+	// 		printf("Current_node value: %d\n", current_node->data);
+	// 	current_node = current_node->next;
+	// 	}
+	// 	printf("finished printing\n");
+	// 	return 0;
+	// }
 
 int main(int argc, char* argv[]){
 
@@ -203,23 +218,26 @@ int main(int argc, char* argv[]){
 	printf("Welcome to the Linked List Implementation Serial Program\n");
 	
 
-	struct list_node_s * head = NULL; /* initializing head node */
+	struct list_node_s * head = malloc(sizeof(struct list_node_s)); /* initializing head node */
 	
 
 	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */
+
+	
 	
 	/* Start the clock to get execution time */
 	clock_t t;
 	t = clock();	
 
-	int r;
+	// go(head);
 
-	printf(" this is the one execution\n" );
+	int r;
 
 	for (int i = 0; i < m; ++i)
 	{
 		r = rand() % 65535 + 1;
 		int b = operation[i];
+		// printf("this is R :%d\n", r);
 		switch(b){
 			case 0:
 				// printf("inside member: %d\n",i );
@@ -227,6 +245,7 @@ int main(int argc, char* argv[]){
 				break;
 
 			case 1:
+				// printf("inserted value : %d\n", r);
 				Insert(r, &head);
 				break;
 
@@ -242,6 +261,12 @@ int main(int argc, char* argv[]){
 	double time_taken = ((double)t)/CLOCKS_PER_SEC;
 
 	printf("fun() took %f seconds to execute \n", time_taken);
+
+	struct list_node_s* current_node = head;
+
+	// printf("After adding and deleting\n");
+
+	// go(head);
 
  	free(head);  /* Free the allocated space for linked list */
 	return 0;
