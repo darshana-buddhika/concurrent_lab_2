@@ -136,11 +136,11 @@ int main(int argc, char* argv[]){
 
 	struct list_node_s * head = NULL; /* initializing head node */
 	
-	if (!head)
-	{
-		printf("ERROR: Memory cannot be allocated\n");
+	// if (!head)
+	// {
+	// 	printf("ERROR: Memory cannot be allocated\n");
 		
-	}
+	// }
 
 	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */
 	
