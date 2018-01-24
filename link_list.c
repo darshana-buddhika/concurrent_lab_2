@@ -8,9 +8,15 @@
 int n;  /*Inital population of linked list*/
 int m;	/*Random operation done on the list*/
 
-// int mInsert;
-// int mDelete;
-// int mMember;
+float mInsert;
+float mDelete;
+float mMember;
+
+int * operation;
+
+long count_member;
+long count_insert;
+long count_delete;
 
 struct list_node_s 
 {
@@ -105,6 +111,20 @@ int Delete(int value, struct list_node_s** head_pp){
 	}
 } /* Delete */
 
+void shuffle(int *array, size_t n){
+    if (n > 1) 
+    {
+        size_t i;
+        for (i = 0; i < n - 1; i++) 
+        {
+          size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+          int t = array[j];
+          array[j] = array[i];
+          array[i] = t;
+        }
+    }
+} /* Shuffle the array */
+
 int Fill_Linked_List( struct list_node_s *head_p){
 	printf("%d hello form the Fill_Linked_List\n", n );
 
@@ -117,18 +137,67 @@ int Fill_Linked_List( struct list_node_s *head_p){
     	}
 
   	}
+
+  	operation = malloc (m * sizeof(int));
+
+  	printf("M :%d\n", m);
+  	printf("minsert: %f mdelete: %f mmember: %f\n", mInsert,mDelete,mMember);
+
+	count_insert = m * mInsert;
+	count_delete = m * mDelete;
+	count_member = m * mMember;
+
+	printf("member :%lu  Insert: %lu  Delete: %lu\n", count_member,count_insert,count_delete );
+
+	for (int i = 0; i < count_member; ++i)
+	{
+		operation[i] = 0;
+	}
+
+	for (int i = 0; i < count_insert; ++i)
+	{
+		operation[count_member+i] = 1;
+	}
+
+	for (int i = 0; i < count_delete; ++i)
+	{
+		operation[count_member + count_insert + i] = 2;
+	}
+
+	// for (int i = 0; i < m; ++i)
+	// {
+		
+	// 	printf(" list value :%d\n", operation[i]);
+	// }
+
+	shuffle(operation, m);  /* Shuffle the array */
+
+	for (int i = 0; i < m; ++i)
+	{
+		
+		printf(" list value :%d\n", operation[i]);
+	}
+
+	
+
+	
 } /* Fill a linked list with given number of nodes */
 
 int main(int argc, char* argv[]){
 
+	
 	/* Take command line arguments n and m */
-	if ( argc != 3 ){  
+	if ( argc != 6 ){  
 		printf("Required argumaents are not supplied\n");
 		exit(1);
 
 	} else {
 		n = (int) strtol(argv[1], (char **)NULL, 10);
 		m = (int) strtol(argv[2], (char **)NULL, 10);
+
+		mMember = (float) atof(argv[3]);
+		mInsert = (float) atof(argv[4]);
+		mDelete = (float) atof(argv[5]);
 	}
 
 	printf("Welcome to the Linked List Implementation Serial Program\n");
@@ -136,11 +205,6 @@ int main(int argc, char* argv[]){
 
 	struct list_node_s * head = NULL; /* initializing head node */
 	
-	// if (!head)
-	// {
-	// 	printf("ERROR: Memory cannot be allocated\n");
-		
-	// }
 
 	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */
 	
@@ -148,18 +212,28 @@ int main(int argc, char* argv[]){
 	clock_t t;
 	t = clock();	
 
+	int r;
+
+	printf(" this is the one execution\n" );
+
 	for (int i = 0; i < m; ++i)
 	{
-		int r;
-
 		r = rand() % 65535 + 1;
-		Member(r, head);
+		int b = operation[i];
+		switch(b){
+			case 0:
+				// printf("inside member: %d\n",i );
+				Member(r, head);
+				break;
 
-		r = rand() % 65535 + 1;
-		Insert(r, &head);
+			case 1:
+				Insert(r, &head);
+				break;
 
-		r = rand() % 65535 + 1;
-		Delete(r, &head);
+			case 2:
+				Delete(r, &head);
+				break;
+		}
 
 	}
 	
