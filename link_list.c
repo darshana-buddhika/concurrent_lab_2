@@ -24,6 +24,8 @@ struct list_node_s
 	struct list_node_s * next;
 };
 
+struct list_node_s * head =  NULL; //malloc(sizeof(struct list_node_s)); /* initializing head node */
+
 int Member(int value, struct list_node_s* head_p){
 
 	// printf("Hello from Member function\n");
@@ -125,7 +127,7 @@ void shuffle(int *array, size_t n){
     }
 } /* Shuffle the array */
 
-int Fill_Linked_List( struct list_node_s *head_p){
+int Fill_Linked_List(){
 	printf("%d hello form the Fill_Linked_List\n", n );
 	// printf("%d pointer", head_p);
 
@@ -134,7 +136,7 @@ int Fill_Linked_List( struct list_node_s *head_p){
   	for (c = 1; c <= n; c++) {
     	r = rand() % 65535 + 1;
     	// printf("initial popilation\n");
-    	if(!Insert(r, &head_p)){   /* If the number is already inserted reduce the counter  */
+    	if(!Insert(r, &head)){   /* If the number is already inserted reduce the counter  */
     		c--;
     	}
 
@@ -218,7 +220,7 @@ int main(int argc, char* argv[]){
 	printf("Welcome to the Linked List Implementation Serial Program\n");
 	
 
-	struct list_node_s * head = malloc(sizeof(struct list_node_s)); /* initializing head node */
+	
 	
 
 	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */

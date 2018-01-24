@@ -22,9 +22,11 @@ const int MAX_THREAD_COUNT = 1024;  /* Maximum number of threads supported by th
 
 int thread_count;   /* Take from command line argument */
 
+
 pthread_rwlock_t rwlock;
 
 // struct list_node_s * head = NULL; /* initializing head node */
+
 
 struct list_node_s 
 {
@@ -32,6 +34,7 @@ struct list_node_s
 	struct list_node_s * next;
 };
 
+struct list_node_s * head = NULL;//malloc(sizeof(struct list_node_s)); /* initializing head node */
 
 
 int Member(int value, struct list_node_s* head_p){
@@ -135,14 +138,14 @@ void shuffle(int *array, size_t n){
     }
 } /* Shuffle the array */
 
-int Fill_Linked_List( struct list_node_s *head_p){
+int Fill_Linked_List(){
 	printf("%d hello form the Fill_Linked_List\n", n );
 
 		int c, r;
  
   	for (c = 1; c <= n; c++) {
     	r = rand() % 65535 + 1;
-    	if(!Insert(r, &head_p)){   /* If the number is already inserted reduce the counter  */
+    	if(!Insert(r, &head)){   /* If the number is already inserted reduce the counter  */
     		c--;
     	}
 
@@ -174,19 +177,8 @@ int Fill_Linked_List( struct list_node_s *head_p){
 		operation[count_member + count_insert + i] = 2;
 	}
 
-	// for (int i = 0; i < m; ++i)
-	// {
-		
-	// 	printf(" list value :%d\n", operation[i]);
-	// }
-
 	shuffle(operation, m);  /* Shuffle the array */
 
-	for (int i = 0; i < m; ++i)
-	{
-		
-		printf(" list value :%d\n", operation[i]);
-	}
 
 } /* Fill a linked list with given number of nodes */
 
@@ -255,7 +247,7 @@ int main(int argc, char* argv[]){
 		
 	// }
 
-	struct list_node_s * head = malloc(sizeof(struct list_node_s)); /* initializing head node */
+	// struct list_node_s * head = malloc(sizeof(struct list_node_s)); /* initializing head node */
 
 	pthread_t* thread_handles;
 

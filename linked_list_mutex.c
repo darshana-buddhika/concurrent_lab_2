@@ -23,13 +23,14 @@ const int MAX_THREAD_COUNT = 1024;  /* Maximum number of threads supported by th
 int thread_count;   /* Take from command line argument */
 pthread_mutex_t mutex;
 
-// struct list_node_s * head = NULL; /* initializing head node */
-
 struct list_node_s 
 {
 	int data;
 	struct list_node_s * next;
 };
+
+struct list_node_s * head = NULL; /* initializing head node */
+
 
 
 
@@ -134,14 +135,14 @@ void shuffle(int *array, size_t n){
     }
 } /* Shuffle the array */
 
-int Fill_Linked_List( struct list_node_s *head_p){
+int Fill_Linked_List(){
 	printf("%d hello form the Fill_Linked_List\n", n );
 
 		int c, r;
  
   	for (c = 1; c <= n; c++) {
     	r = rand() % 65535 + 1;
-    	if(!Insert(r, &head_p)){   /* If the number is already inserted reduce the counter  */
+    	if(!Insert(r, &head)){   /* If the number is already inserted reduce the counter  */
     		c--;
     	}
 
@@ -173,21 +174,76 @@ int Fill_Linked_List( struct list_node_s *head_p){
 		operation[count_member + count_insert + i] = 2;
 	}
 
-	// for (int i = 0; i < m; ++i)
-	// {
-		
-	// 	printf(" list value :%d\n", operation[i]);
-	// }
-
 	shuffle(operation, m);  /* Shuffle the array */
 
-	for (int i = 0; i < m; ++i)
-	{
-		
-		printf(" list value :%d\n", operation[i]);
-	}
 
 } /* Fill a linked list with given number of nodes */
+
+void* thread_operation(void* rank);
+
+int main(int argc, char* argv[]){
+
+	/* Take command line arguments n and m */
+	if ( argc != 7 ){  
+		printf("Required argumaents are not supplied\n");
+		exit(1);
+
+	} else {
+		n = (int) strtol(argv[1], (char **)NULL, 10);
+		m = (int) strtol(argv[2], (char **)NULL, 10);
+		mMember = (float) atof(argv[3]);
+		mInsert = (float) atof(argv[4]);
+		mDelete = (float) atof(argv[5]);
+		thread_count = (int) strtol(argv[6], (char **)NULL, 10);
+	}
+
+	printf("Welcome to the Linked List Implementation Serial Program\n");
+	
+	// if (!head)
+	// {
+	// 	printf("ERROR: Memory cannot be allocated\n");
+		
+	// }
+	// struct list_node_s * head = malloc(sizeof(struct list_node_s)); /* initializing head node */
+
+	pthread_t* thread_handles;
+
+	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */
+
+	thread_handles = (pthread_t*) malloc (thread_count*sizeof(pthread_t));
+	
+	/* Start the clock to get execution time */
+	clock_t t;
+	t = clock();	
+
+	pthread_mutex_init(&mutex, NULL);
+    
+	printf("thread count: %d\n", thread_count);
+
+	long thread;
+
+    for (thread = 0; thread < thread_count; thread++)  
+    {
+        pthread_create(&thread_handles[thread], NULL,thread_operation , (void*)thread);  
+    }
+     
+    for (thread = 0; thread < thread_count; thread++) 
+    {
+        pthread_join(thread_handles[thread], NULL); 
+    }
+
+    pthread_mutex_destroy(&mutex);
+	
+	/* Calculate the execution time */
+	t = clock() - t;
+	double time_taken = ((double)t)/CLOCKS_PER_SEC;
+
+	printf("fun() took %f seconds to execute \n", time_taken);
+
+ 	free(head);  /* Free the allocated space for linked list */
+	return 0;
+}
+
 
 void* thread_operation(void * rank){
 	long my_rank = (long) rank;
@@ -228,67 +284,4 @@ void* thread_operation(void * rank){
 		}      
         
 	}
-}
-
-int main(int argc, char* argv[]){
-
-	/* Take command line arguments n and m */
-	if ( argc != 7 ){  
-		printf("Required argumaents are not supplied\n");
-		exit(1);
-
-	} else {
-		n = (int) strtol(argv[1], (char **)NULL, 10);
-		m = (int) strtol(argv[2], (char **)NULL, 10);
-		mMember = (float) atof(argv[3]);
-		mInsert = (float) atof(argv[4]);
-		mDelete = (float) atof(argv[5]);
-		thread_count = (int) strtol(argv[6], (char **)NULL, 10);
-	}
-
-	printf("Welcome to the Linked List Implementation Serial Program\n");
-	
-	// if (!head)
-	// {
-	// 	printf("ERROR: Memory cannot be allocated\n");
-		
-	// }
-	struct list_node_s * head = malloc(sizeof(struct list_node_s)); /* initializing head node */
-	
-	pthread_t* thread_handles;
-
-	Fill_Linked_List(head);  /* Fill the linked list with n random numbers */
-
-	thread_handles = (pthread_t*) malloc (thread_count*sizeof(pthread_t));
-	
-	/* Start the clock to get execution time */
-	clock_t t;
-	t = clock();	
-
-	pthread_mutex_init(&mutex, NULL);
-    
-	printf("thread count: %d\n", thread_count);
-
-	long thread;
-
-    for (thread = 0; thread < thread_count; thread++)  
-    {
-        pthread_create(&thread_handles[thread], NULL,thread_operation , (void*)thread);  
-    }
-     
-    for (thread = 0; thread < thread_count; thread++) 
-    {
-        pthread_join(thread_handles[thread], NULL); 
-    }
-
-    pthread_mutex_destroy(&mutex);
-	
-	/* Calculate the execution time */
-	t = clock() - t;
-	double time_taken = ((double)t)/CLOCKS_PER_SEC;
-
-	printf("fun() took %f seconds to execute \n", time_taken);
-
- 	free(head);  /* Free the allocated space for linked list */
-	return 0;
 }
